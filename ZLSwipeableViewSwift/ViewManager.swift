@@ -77,12 +77,15 @@ class ViewManager : NSObject {
     }
     
     static func defaultSnappingState(_ view: UIView) -> State {
-        return .snapping(view.convert(view.center, from: view.superview))
+      let newCenter = CGPoint(x: view.center.x, y: (view.bounds.height / 2) + 87)
+      return .snapping(view.convert(newCenter, from: view.superview))
     }
     
     func snappingStateAtContainerCenter() -> State {
-        guard let swipeableView = swipeableView else { return ViewManager.defaultSnappingState(view) }
-        return .snapping(containerView.convert(swipeableView.center, from: swipeableView.superview))
+      guard let swipeableView = swipeableView else { return ViewManager.defaultSnappingState(view) }
+      
+      let newCenter = CGPoint(x: swipeableView.center.x, y: (view.bounds.height / 2) + 87)
+      return .snapping(containerView.convert(newCenter, from: swipeableView.superview))
     }
     
     deinit {

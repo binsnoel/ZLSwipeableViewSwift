@@ -266,14 +266,16 @@ extension ZLSwipeableView {
         }
 
         func rotateView(_ view: UIView, forDegree degree: CGFloat, duration: TimeInterval, offsetFromCenter offset: CGPoint, swipeableView: ZLSwipeableView,  completion: ((Bool) -> Void)? = nil) {
-            UIView.animate(withDuration: duration, delay: 0, options: .allowUserInteraction, animations: {
-                view.center = swipeableView.convert(swipeableView.center, from: swipeableView.superview)
-                var transform = CGAffineTransform(translationX: offset.x, y: offset.y)
-                transform = transform.rotated(by: toRadian(degree))
-                transform = transform.translatedBy(x: -offset.x, y: -offset.y)
-                view.transform = transform
-                },
-                completion: completion)
+          print("rotateView")
+          UIView.animate(withDuration: duration, delay: 0, options: .allowUserInteraction, animations: {
+            let newCenter = CGPoint(x: swipeableView.center.x, y: (view.bounds.height / 2) + 87)
+            view.center = swipeableView.convert(newCenter, from: swipeableView.superview) //swipeableView.center
+            var transform = CGAffineTransform(translationX: offset.x, y: offset.y)
+            transform = transform.rotated(by: toRadian(degree))
+            transform = transform.translatedBy(x: -offset.x, y: -offset.y)
+            view.transform = transform
+          },
+                         completion: completion)
         }
 
         return { (view: UIView, index: Int, views: [UIView], swipeableView: ZLSwipeableView) in
