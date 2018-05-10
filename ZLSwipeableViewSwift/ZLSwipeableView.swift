@@ -35,6 +35,8 @@ public struct Movement {
 // MARK: - Main
 open class ZLSwipeableView: UIView {
 
+    open var constHeight = CGFloat(87)
+  
     // MARK: Data Source
     open var numberOfActiveView = UInt(4)
     open var nextView: NextViewHandler? {
@@ -101,6 +103,16 @@ open class ZLSwipeableView: UIView {
         addSubview(containerView)
         addSubview(miscContainerView)
         animator = UIDynamicAnimator(referenceView: self)
+      
+        if UIDevice().userInterfaceIdiom == .phone {
+          switch UIScreen.main.nativeBounds.height {
+          case 2436:
+            constantHeight = 112
+          default:
+            constantHeight = 87
+          }
+        }
+        constHeight = constantHeight
     }
 
     deinit {
@@ -266,9 +278,8 @@ extension ZLSwipeableView {
         }
 
         func rotateView(_ view: UIView, forDegree degree: CGFloat, duration: TimeInterval, offsetFromCenter offset: CGPoint, swipeableView: ZLSwipeableView,  completion: ((Bool) -> Void)? = nil) {
-          print("rotateView")
           UIView.animate(withDuration: duration, delay: 0, options: .allowUserInteraction, animations: {
-            let newCenter = CGPoint(x: swipeableView.center.x, y: (view.bounds.height / 2) + 87)
+           let newCenter = CGPoint(x: swipeableView.center.x, y: CGFloat(CGFloat(view.bounds.height / 2) + constantHeight))
             view.center = swipeableView.convert(newCenter, from: swipeableView.superview) //swipeableView.center
             var transform = CGAffineTransform(translationX: offset.x, y: offset.y)
             transform = transform.rotated(by: toRadian(degree))

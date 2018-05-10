@@ -8,6 +8,8 @@
 
 import UIKit
 
+public var constantHeight : CGFloat = 87
+
 class ViewManager : NSObject {
     
     // Snapping -> [Moving]+ -> Snapping
@@ -77,14 +79,14 @@ class ViewManager : NSObject {
     }
     
     static func defaultSnappingState(_ view: UIView) -> State {
-      let newCenter = CGPoint(x: view.center.x, y: (view.bounds.height / 2) + 87)
+      let newCenter = CGPoint(x: view.center.x, y: CGFloat((view.bounds.height / 2) + constantHeight))
       return .snapping(view.convert(newCenter, from: view.superview))
     }
     
     func snappingStateAtContainerCenter() -> State {
       guard let swipeableView = swipeableView else { return ViewManager.defaultSnappingState(view) }
       
-      let newCenter = CGPoint(x: swipeableView.center.x, y: (view.bounds.height / 2) + 87)
+      let newCenter = CGPoint(x: swipeableView.center.x, y: CGFloat((view.bounds.height / 2) + constantHeight))
       return .snapping(containerView.convert(newCenter, from: swipeableView.superview))
     }
     
