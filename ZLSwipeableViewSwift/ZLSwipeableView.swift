@@ -199,13 +199,19 @@ open class ZLSwipeableView: UIView {
         swipeView(topView, location: location, directionVector: directionVector)
     }
 
+    open func enableGestureRecognizers(_ flag: Bool) {
+      for managers in self.viewManagers {
+        managers.value.attachGestureRecognizers(flag)
+      }
+    }
+  
     // MARK: Private APIs
     fileprivate func allViews() -> [UIView] {
         return containerView.subviews
     }
 
     fileprivate func insert(_ view: UIView, atIndex index: Int) {
-        guard !allViews().contains(view) else {
+      guard !allViews().contains(view) else {
             // this view has been schedule to be removed
             guard let viewManager = viewManagers[view] else { return }
             viewManager.state = viewManager.snappingStateAtContainerCenter()

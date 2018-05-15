@@ -77,6 +77,19 @@ class ViewManager : NSObject {
         miscContainerView.addSubview(anchorView)
         containerView.insertSubview(view, at: index)
     }
+  
+    open func attachGestureRecognizers(_ flag: Bool) {
+      if(flag) {
+        view.addGestureRecognizer(ZLPanGestureRecognizer(target: self, action: #selector(ViewManager.handlePan(_:))))
+        if swipeableView?.didTap != nil {
+          self.addTapRecognizer()
+        }
+      }
+      else {
+        self.view.gestureRecognizers = nil
+      }
+      
+    }
     
     static func defaultSnappingState(_ view: UIView) -> State {
       let newCenter = CGPoint(x: view.center.x, y: CGFloat((view.bounds.height / 2) + constantHeight))
