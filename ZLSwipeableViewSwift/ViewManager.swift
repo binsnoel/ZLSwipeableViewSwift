@@ -117,11 +117,11 @@ class ViewManager : NSObject {
             removeBehavior(pushBehavior)
         }
         
-        for gestureRecognizer in view.gestureRecognizers! {
-            if gestureRecognizer.isKind(of: ZLPanGestureRecognizer.classForCoder()) {
-                view.removeGestureRecognizer(gestureRecognizer)
-            }
-        }
+//        for gestureRecognizer in view.gestureRecognizers! {
+//            if gestureRecognizer.isKind(of: ZLPanGestureRecognizer.classForCoder()) {
+//                view.removeGestureRecognizer(gestureRecognizer)
+//            }
+//        }
         
         anchorView.removeFromSuperview()
         view.removeFromSuperview()
